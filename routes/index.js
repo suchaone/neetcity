@@ -7,13 +7,17 @@ var neetFactory = require('../neet-factory');
 neetFactory.setWorld(world);
 
 router.get('/place/:id', function(req, res, next) {
-  var neet = neetFactory.spawnNeet(req.params.id);
   res.render('place', {
     placename: world.places[req.params.id],
-    name: neet.name,
-    tagline: neet.tagline,
-    neets: _.where(world.neets, {place:req.params.id})
+    neets: _.where(world.neets, {place:req.params.id}),
+    spawnURL: '/place/' + req.params.id + '/spawn'
   });
+});
+
+// should be a post
+router.get('/place/:id/spawn', function(req, res, next) {
+  neetFactory.spawnNeet(req.params.id);
+  res.redirect('/place/' + req.params.id);
 });
 
 router.get('/', function(req, res, next) {
