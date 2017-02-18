@@ -5,10 +5,13 @@ var neetFactory = require('../neet-factory');
 
 neetFactory.setWorld(world);
 
-/* GET home page. */
+router.get('/place/:id', function(req, res, next) {
+  var neet = neetFactory.spawnNeet(req.params.id);
+  res.render('place', { name: neet.name, tagline: neet.tagline });
+});
+
 router.get('/', function(req, res, next) {
-  var neet = neetFactory.spawnNeet();
-  res.render('index', { name: neet.name, tagline: neet.tagline });
+  res.render('index', { places: world.places });
 });
 
 module.exports = router;

@@ -2,7 +2,11 @@ var _ = require('underscore');
 
 module.exports = {
   neets: [],
-  locations: []
+  places: {
+    'starbucks': 'Starbucks',
+    'library': 'NEET City Public Library',
+    'thirstygoon': 'The Thirsty Goon Bar'
+  }
 }
 
 // neets take actions every 5 seconds (for testing; lengthen this in prod)

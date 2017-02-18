@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1 #{name}
-  h2 #{tagline}
+  h1 Welcome to NEET City 
+  ul
+    each val, index in places
+      li
+        a(href='place/' + index)= val

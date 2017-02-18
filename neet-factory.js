@@ -198,16 +198,18 @@ module.exports = {
   setWorld: function(world) {
     this.world = world;
   },
-  spawnNeet: function (neets) {
+  spawnNeet: function (place) {
     newNeet = {
       nationality: Math.random() > 0.5 ? _.sample(NATIONALITY) : 'american',
       gender: 'male',
-      location: 0,
+      place: place,
       tagline: randomTagline(this.nationality, this.gender),
       name: randomName(this.nationality, this.gender)
     };
     if (this.world == null) {
       console.error('[neet spawn failed] please create a world and pass it to the neet factory using the setWorld method before spawning neets');
+    } else if (!this.world.places.hasOwnProperty(place)) {
+      console.error('[neet spawn failed] a place with this id does not exist in this world');
     } else {
       this.world.neets.push(newNeet); // need elegant error handling in case neets is not set
       newNeet.index = this.world.neets.length;
