@@ -6,8 +6,6 @@ module.exports = {
 }
 
 // neets take actions every 5 seconds (for testing; lengthen this in prod)
-setTimeout(function() {
-}, 5000);
 
 function tick() {
   var strNeets = "[" + new Date(new Date().getTime()).toLocaleString() + "] ";

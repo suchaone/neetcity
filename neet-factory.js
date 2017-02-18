@@ -206,9 +206,13 @@ module.exports = {
       tagline: randomTagline(this.nationality, this.gender),
       name: randomName(this.nationality, this.gender)
     };
-    this.world.neets.push(newNeet); // need elegant error handling in case neets is not set
-    newNeet.index = this.world.neets.length;
-    // TODO: save the NEET to DB
-    return newNeet;
+    if (this.world == null) {
+      console.error('[neet spawn failed] please create a world and pass it to the neet factory using the setWorld method before spawning neets');
+    } else {
+      this.world.neets.push(newNeet); // need elegant error handling in case neets is not set
+      newNeet.index = this.world.neets.length;
+      // TODO: save the NEET to DB
+      return newNeet;
+    }
   }
 }
