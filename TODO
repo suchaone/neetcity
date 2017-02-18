@@ -1,0 +1,31 @@
+figure out the best way to generate the neet graphics
+
+two options:
+
+1. generate the images on the server using something like
+   the *canvas* package (canvas graphics api backed by cairo).
+   advantages include being able to link to the images for
+   easy sharing online, simpler client-side code, no need to
+   deal with migrations in case the options or structure
+   of the various face/clothing components change, faster initial
+   loading speed
+
+2. generate the images on the client. advantage is faster
+   loading speed of individual neets once all the assets have
+   been loaded
+
+------
+
+the tagline is currently random and meaningless. it should
+actually affect the neet's behavior and dialog tree
+
+things like nationalities, ideologies, and occupations should
+be objects with various methods
+
+for example, an ideology should have a 'leader' method which 
+returns a generic leader tulpa, which itself has some
+properties like a name, and the neet's relationship with it
+
+similarly, liking or disliking a thing should be reflected
+in behavior (interactions with other neets who like/dislike
+the thing) and conversation
