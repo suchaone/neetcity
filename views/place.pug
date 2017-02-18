@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1 #{name}
-  h2 #{tagline}
+  h1 #{placename} 
+  ul
+    each val, index in neets
+      li= val.name + ': ' + val.tagline
+  a(href='/')  b a c k 
