@@ -26,58 +26,59 @@ var WORK = [ 'works', 'plays', 'hangs out', 'meets PEOPLE', 'trolls PEOPLE', 'fl
 var PLACE = [ 'online', 'in world of warcraft', 'on twitter', 'on facebook', 'in starbucks', 'in the basement', 'at the gym', 'on the street', 'on myspace', 'on google plus', 'on reddit', 'in second life', 'in furcadia', 'on somethingawful' ];
 var CLONE = [ 'a clone of', 'his tulpa of', 'a ghola of', 'a painting of', 'a hologram of', 'a simulation of', 'a strawman of', 'a puppet modelled after', 'a guy dressed up as' ];
 
-var forms = [
-  'OPINION PLURAL',
-  'OPINION certain PLURAL',
-  'OPINION his PLURAL',
-  'OPINION ADJECTIVE PEOPLE',
-  'OPINION ADJECTIVE PEOPLE',
-  'OPINION PEOPLE',
-  'OPINION the PEOPLE',
-  'OPINION VIDYA',
-  'professional OCCUPATION',
-  'amateur OCCUPATION',
-  'career OCCUPATION',
-  'full-time OCCUPATION',
-  'part-time OCCUPATION',
-  'tenured OCCUPATION',
-  'unionized OCCUPATION',
-  'XLY plays VIDYA',
-  'plays VIDYA with PEOPLE',
-  'ADJECTIVE VIDYA player',
-  'OPINION PREFIXIDEOLOGYs',
-  'OPINION IDEOLOGYs',
-  'OPINION ADJECTIVE IDEOLOGYs',
-  'COMMON IDEOLOGY',
-  'COMMON PREFIXIDEOLOGY',
-  'OPINION CELEBRITY FANs',
-  'OPINION ADJECTIVE CELEBRITY FANs',
-  'a VERY ADJECTIVE PERSON',
-  'a VERY ADJECTIVE ' + nationality,
-  'COMMON PERSON',
-  'RELIGION PERSON',
-  'COMMON PREFIXIDEOLOGY',
-  'COMMON ' + nationality,
-  'COMMON ' + nationality + ' PREFIXIDEOLOGY',
-  'COMMON ' + nationality + ' IDEOLOGY',
-  'ADJECTIVE CELEBRITY FAN',
-  'IDEOLOGY CELEBRITY FAN',
-  'ADJECTIVE CELEBRITY FAN',
-  'FRAME STORY that ADJECTIVE PERSON',
-  'FRAME STORY that ADJECTIVE IDEOLOGY',
-  'FRAME STORY that ADJECTIVE NATIONALITY',
-  'STORY CLONE CELEBRITY',
-  'STORY a VERY ADJECTIVE PERSON PLACE',
-  'STORY a VERY ADJECTIVE IDEOLOGY PLACE',
-  'STORY a VERY ADJECTIVE NATIONALITY PLACE',
-  'TRAITLY TRAITADJ PERSON',
-  'TRAITLY TRAITADJ ' + nationality,
-  'TRAITLY TRAITADJ IDEOLOGY',
-  'TRAITLY TRAITADJ CELEBRITY FAN',
-  'WORK PLACE',
-];
 
-function randomTagline() {
+function randomTagline(nationality, gender) {
+
+  var forms = [
+    'OPINION PLURAL',
+    'OPINION certain PLURAL',
+    'OPINION his PLURAL',
+    'OPINION ADJECTIVE PEOPLE',
+    'OPINION ADJECTIVE PEOPLE',
+    'OPINION PEOPLE',
+    'OPINION the PEOPLE',
+    'OPINION VIDYA',
+    'professional OCCUPATION',
+    'amateur OCCUPATION',
+    'career OCCUPATION',
+    'full-time OCCUPATION',
+    'part-time OCCUPATION',
+    'tenured OCCUPATION',
+    'unionized OCCUPATION',
+    'XLY plays VIDYA',
+    'plays VIDYA with PEOPLE',
+    'ADJECTIVE VIDYA player',
+    'OPINION PREFIXIDEOLOGYs',
+    'OPINION IDEOLOGYs',
+    'OPINION ADJECTIVE IDEOLOGYs',
+    'COMMON IDEOLOGY',
+    'COMMON PREFIXIDEOLOGY',
+    'OPINION CELEBRITY FANs',
+    'OPINION ADJECTIVE CELEBRITY FANs',
+    'a VERY ADJECTIVE PERSON',
+    'a VERY ADJECTIVE ' + nationality,
+    'COMMON PERSON',
+    'RELIGION PERSON',
+    'COMMON PREFIXIDEOLOGY',
+    'COMMON ' + nationality,
+    'COMMON ' + nationality + ' PREFIXIDEOLOGY',
+    'COMMON ' + nationality + ' IDEOLOGY',
+    'ADJECTIVE CELEBRITY FAN',
+    'IDEOLOGY CELEBRITY FAN',
+    'ADJECTIVE CELEBRITY FAN',
+    'FRAME STORY that ADJECTIVE PERSON',
+    'FRAME STORY that ADJECTIVE IDEOLOGY',
+    'FRAME STORY that ADJECTIVE NATIONALITY',
+    'STORY CLONE CELEBRITY',
+    'STORY a VERY ADJECTIVE PERSON PLACE',
+    'STORY a VERY ADJECTIVE IDEOLOGY PLACE',
+    'STORY a VERY ADJECTIVE NATIONALITY PLACE',
+    'TRAITLY TRAITADJ PERSON',
+    'TRAITLY TRAITADJ ' + nationality,
+    'TRAITLY TRAITADJ IDEOLOGY',
+    'TRAITLY TRAITADJ CELEBRITY FAN',
+    'WORK PLACE',
+  ];
 
   var form = _.sample(forms);
   form = form.replace('OPINION', _.sample(OPINION));
@@ -193,17 +194,20 @@ function randomName (nationality, gender) {
 }
 
 module.exports = {
-  neets: [],
-  spawnNeet: function () {
+  world: null, 
+  setWorld: function(world) {
+    this.world = world;
+  },
+  spawnNeet: function (neets) {
     newNeet = {
-      nationality: Math.random() > 0.5 ? _.sample(NATIONALITY) : 'american'; ,
+      nationality: Math.random() > 0.5 ? _.sample(NATIONALITY) : 'american',
       gender: 'male',
       location: 0,
-      tagline: randomTagline(),
-      name: randomName()
+      tagline: randomTagline(this.nationality, this.gender),
+      name: randomName(this.nationality, this.gender)
     };
-    this.neets.push(newNeet);
-    newNeet.index = neets.length;
+    this.world.neets.push(newNeet); // need elegant error handling in case neets is not set
+    newNeet.index = this.world.neets.length;
     // TODO: save the NEET to DB
     return newNeet;
   }
